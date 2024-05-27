@@ -1,0 +1,85 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{hyperref}
+
+
+
+\title{Lobster Fisherman Optimization}
+\author{VIJULIE DENIS-EMANUEL}
+\date{Mai 2024}
+
+\begin{document}
+
+\maketitle
+
+\section{Link către Repository}
+Repository-ul cu codul sursă poate fi găsit la adresa:
+\url{https://github.com/DenisViju/Tema-PA.git}
+
+\section{Introducere}
+Scopul acestui proiect este de a dezvolta un software care să permită selectarea optimă a homarilor pentru a maximiza valoarea totală a capturii, respectând limita de capacitate a plasei.
+
+\section{Enunțul Problemei}
+Un pescar explorează o regiune de coastă bogată în homari, fiecare având propria sa dimensiune și valoare. Plasa pescarului are o capacitate limitată, exprimată în numărul total de centimetri pe care îi poate conține. Având o listă detaliată cu dimensiunile și valorile homarilor disponibili în acea regiune, sarcina este de a elabora o strategie prin care pescarul să selecteze homarii astfel încât să maximizeze valoarea totală a capturii, respectând în același timp limita de capacitate a plasei.
+
+\section{Algoritmi}
+Algoritmul folosit pentru această problemă este o variantă a problemei rucsacului (Knapsack problem) și este implementat folosind programarea dinamică.
+
+\begin{algorithmic}[1]
+  \Procedure{DynamicProgramming}{Lista homarilor $H$, capacitatea plasei $C$}
+  \State $n \gets$ numărul de homari din lista $H$
+  \State Initializează o matrice $V[0..n][0..C]$ pentru a stoca valorile maxime
+  \For{$i\gets 0$ to $n$}
+    \For{$j\gets 0$ to $C$}
+      \If{$i=0$ sau $j=0$}
+        \State $V[i][j] \gets 0$
+      \ElsIf{$w_i \leq j$}
+        \State $V[i][j] \gets \max\{V[i-1][j], v_i + V[i-1][j-w_i]\}$
+      \Else
+        \State $V[i][j] \gets V[i-1][j]$
+      \EndIf
+    \EndFor
+  \EndFor
+  \State $S \gets$ lista homarilor selectați
+  \For{$i\gets n$ down to $1$}
+    \If{$V[i][C] \neq V[i-1][C]$}
+      \State Adaugă homarul $i$ la lista $S$
+      \State $C \gets C - w_i$
+    \EndIf
+  \EndFor
+  \State \Return $S$
+  \EndProcedure
+\end{algorithmic}
+
+
+\section{Date Experimentale}
+Datele experimentale au fost generate aleator folosind un program C care produce seturi de date non-triviale mari și foarte mari.
+
+\section{Proiectarea Experimentală a Aplicației}
+Aplicația a fost proiectată pentru a fi modulară și ușor de utilizat, cu un cod sursă bine structurat și comentat.
+
+\section{Rezultate și Concluzii}
+\section{Date Experimentale}
+Datele experimentale au fost generate utilizând un program C care produce seturi de date non-triviale. Aceste date au fost generate pentru a simula dimensiunile și valorile homarilor disponibili într-o regiune de coastă. Mai jos sunt prezentate câteva exemple de date generate:
+
+\begin{itemize}
+  \item Lobster 1: Dimensiune = 2 cm, Valoare = 10 monede de aur
+  \item Lobster 2: Dimensiune = 8 cm, Valoare = 29 monede de aur
+  \item Lobster 3: Dimensiune = 4 cm, Valoare = 37 monede de aur
+  \item Lobster 4: Dimensiune = 4 cm, Valoare = 20 monede de aur
+  \item Lobster 5: Dimensiune = 8 cm, Valoare = 2 monede de aur
+  \item Lobster 6: Dimensiune = 4 cm, Valoare = 35 monede de aur
+  \item Lobster 7: Dimensiune = 1 cm, Valoare = 4 monede de aur
+  \item Lobster 8: Dimensiune = 3 cm, Valoare = 30 monede de aur
+  \item Lobster 9: Dimensiune = 2 cm, Valoare = 17 monede de aur
+  \item Lobster 10: Dimensiune = 7 cm, Valoare = 48 monede de aur
+\end{itemize}
+
+Aceste date au fost utilizate pentru testarea algoritmului de selecție a homarilor.
+
+Rezultatele experimentale arată că algoritmul de programare dinamică este eficient pentru optimizarea valorii capturii, maximizând valoarea totală fără a depăși limita de capacitate.
+
+\end{document}
